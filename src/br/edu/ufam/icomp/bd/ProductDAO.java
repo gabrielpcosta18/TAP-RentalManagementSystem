@@ -62,8 +62,8 @@ public class ProductDAO extends RentalDatabase {
 	}
 	
 	@Override
-	public String getTableName() {
+	public String getTableQuery() {
 		// TODO Auto-generated method stub
-		return TABLE_NAME;
+		return "select id as Código, title as Título, description as Descrição, type as Tipo, maxPeriodRent as PeríodoMax, totalInStock as Estoque, rentPrice as Preço from " + TABLE_NAME;
 	}
 }

@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class RegisterEmployeeWindow extends JFrame {
 
@@ -54,6 +56,10 @@ public class RegisterEmployeeWindow extends JFrame {
 		this.parentWindow.refreshTableData();
 		RegisterEmployeeWindow.this.dispose();
 	}
+	
+	private void onClosing() {
+		this.parentWindow.setEnabled(true);
+	}
 
 	private void initializeComponents() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -82,5 +88,13 @@ public class RegisterEmployeeWindow extends JFrame {
 		});
 		
 		contentPane.add(btnConfirmar, BorderLayout.SOUTH);
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				onClosing();
+			}
+		});
+		
 	}
 }

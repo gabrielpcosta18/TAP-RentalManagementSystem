@@ -42,7 +42,7 @@ public class RentalDatabase {
 	}
 	
 	public DefaultTableModel getTableModel() {
-		String query = "SELECT * FROM " + getTableName();
+		String query = getTableQuery();
 		
 		try {			
 			ResultSet rs = connection.prepareStatement(query).executeQuery();
@@ -64,11 +64,18 @@ public class RentalDatabase {
 		    }
 		    
 		    DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-		    	 @Override
-		    	    public boolean isCellEditable(int row, int column) {
-		    	       //all cells false
-		    	       return false;
-		    	    }
+		    	@Override
+	    	    public boolean isCellEditable(int row, int column) {
+	    	       //all cells false
+	    	       return false;
+	    	    }
+		    	
+		    	@Override
+	    	    public String getColumnName(int index) {
+	    	       //all cells false
+		    		String s = columnNames.get(index);
+	    	        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+	    	    }
 		    };
 		    
 		    return model;
@@ -80,7 +87,7 @@ public class RentalDatabase {
 		return null;		
 	}
 
-	public String getTableName() {
+	public String getTableQuery() {
 		// TODO Auto-generated method stub
 		return "";
 	}

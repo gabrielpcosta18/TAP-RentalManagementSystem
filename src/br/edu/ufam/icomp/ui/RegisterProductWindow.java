@@ -33,6 +33,8 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class RegisterProductWindow extends JFrame {
 	private JTextField txtTitle;
@@ -85,6 +87,10 @@ public class RegisterProductWindow extends JFrame {
 		this.parentWindow.setEnabled(true);
 		this.parentWindow.refreshTableData();
 		RegisterProductWindow.this.dispose();
+	}
+	
+	private void onClosing() {
+		this.parentWindow.setEnabled(true);
 	}
 	
 	private void initializeComponents() {
@@ -155,6 +161,13 @@ public class RegisterProductWindow extends JFrame {
 			}
 		});
 		getContentPane().add(btnOk, "cell 1 9 3 1,alignx center");
-
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				onClosing();
+			}
+		});
+		
 	}
 }

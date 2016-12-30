@@ -30,9 +30,9 @@ public class EmployeeDAO extends RentalDatabase {
 	}
 	
 	@Override
-	public String getTableName() {
+	public String getTableQuery() {
 		// TODO Auto-generated method stub
-		return TABLE_NAME;
+		return "select id as Código, name as Nome from " + TABLE_NAME;
 	}
 
 	public boolean updateEmployee(Employee employee) {
