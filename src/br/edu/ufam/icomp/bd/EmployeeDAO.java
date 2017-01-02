@@ -15,6 +15,38 @@ public class EmployeeDAO extends RentalDatabase {
 		return TABLE_NAME;
 	}
 	
+	private static Employee getEmployeeFromResultSet(ResultSet rs) {
+		try {
+			return new Employee(
+					rs.getInt(1),
+					rs.getString(2));
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return null;
+	}
+	
+	public static Employee getEmployeeById(int id) {
+		String query = "SELECT * FROM " + TABLE_NAME + " WHERE ID = ?";
+		
+		try {
+			PreparedStatement st = connection.prepareStatement(query);
+			st.setInt(1, id);
+			
+			ResultSet rs = st.executeQuery();
+			rs.next();
+			
+			return getEmployeeFromResultSet(rs);			
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return null;
+	}
+	
 	public ArrayList<Employee> getAll(boolean filter) {
 		String query = "SELECT * FROM " + TABLE_NAME;
 		ArrayList<Employee> result = new ArrayList<>();

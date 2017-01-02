@@ -50,8 +50,8 @@ public class EmployeeWindow extends JFrame {
 	
 	private void tableCellClicked() {
 		int row = table.getSelectedRow();
-		Employee employee = new Employee((int) table.getValueAt(row, 0), 
-				(String) table.getValueAt(row, 1));
+		Employee employee = new Employee((int) table.getModel().getValueAt(row, 0), 
+				(String) table.getModel().getValueAt(row, 1));
 		
 		this.setEnabled(false);
 		
@@ -65,6 +65,7 @@ public class EmployeeWindow extends JFrame {
 	}
 
 	private void initializeComponents() {
+		setTitle("Funcion\u00E1rios");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
@@ -84,6 +85,7 @@ public class EmployeeWindow extends JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(new EmployeeDAO().getTableModel());
 		table.getColumnModel().getColumn(0).setMinWidth(35);
+		table.removeColumn(table.getColumnModel().getColumn(0));
 		JScrollPane pane = new JScrollPane(table);
 		contentPane.add(pane, "cell 0 0,grow");
 		

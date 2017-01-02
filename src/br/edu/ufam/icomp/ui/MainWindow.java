@@ -62,63 +62,10 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setTitle("Gerenciador de Loca\u00E7\u00F5es");
+		frame.setBounds(100, 100, 515, 375);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
-		
-		
-		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
-		
-		
-		JMenu Cadastrar = new JMenu("Cadastrar");
-		menuBar.add(Cadastrar);
-		
-		
-		JMenuItem mntmCliente_1 = new JMenuItem("Cliente");
-		mntmCliente_1.addMouseListener(new MouseAdapter() {		
-			@Override
-			public void mousePressed(MouseEvent e) {
-				/*RegisterCustomerWindow window = new RegisterCustomerWindow();
-				window.setLocationRelativeTo(MainWindow.this.frame);
-				window.setVisible(true);*/
-			}
-		});
-		Cadastrar.add(mntmCliente_1);
-		
-		JMenuItem mntmFuncionrio = new JMenuItem("Funcion\u00E1rio");
-		mntmFuncionrio.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				RegisterEmployeeWindow window = new RegisterEmployeeWindow();
-				window.setLocationRelativeTo(MainWindow.this.frame);
-				window.setVisible(true);
-			}
-		});
-		Cadastrar.add(mntmFuncionrio);
-		
-		JMenuItem mntmProduto = new JMenuItem("Produto");
-		mntmProduto.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				RegisterProductWindow window = new RegisterProductWindow();
-				window.setLocationRelativeTo(MainWindow.this.frame); 
-				window.setVisible(true);
-			}
-		});
-		Cadastrar.add(mntmProduto);
-		
-		JMenu mnEditar = new JMenu("Editar");
-		menuBar.add(mnEditar);
-		
-		JMenuItem mntmProduto_1 = new JMenuItem("Produto");
-		mntmProduto_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				
-			}
-		});
-		mnEditar.add(mntmProduto_1);
 		frame.getContentPane().setLayout(new MigLayout("", "[grow][][][grow]", "[grow][][grow]"));
 		
 		JButton btnCustomer = new JButton("Clientes");

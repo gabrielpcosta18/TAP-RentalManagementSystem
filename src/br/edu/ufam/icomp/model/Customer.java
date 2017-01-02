@@ -37,4 +37,17 @@ public class Customer {
 	public String toString() {
 		return this.name;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj == null) {
+	        return false;
+	    }
+	    if (!Customer.class.isAssignableFrom(obj.getClass())) {
+	        return false;
+	    }
+	    final Customer other = (Customer) obj;
+	    
+	    return this.id == other.id;
+	}
 }

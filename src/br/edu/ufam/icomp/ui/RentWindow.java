@@ -11,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 import br.edu.ufam.icomp.bd.CustomerDAO;
 import br.edu.ufam.icomp.bd.RentalDAO;
 import br.edu.ufam.icomp.model.Customer;
+import br.edu.ufam.icomp.model.Employee;
+import br.edu.ufam.icomp.model.Product;
 import br.edu.ufam.icomp.model.Rental;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTable;
@@ -22,6 +24,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Date;
 
 public class RentWindow extends JFrame {
 
@@ -51,10 +54,9 @@ public class RentWindow extends JFrame {
 	
 	private void tableCellClicked() {
 		int row = table.getSelectedRow();
-		Rental rental = new Rental((int) table.getValueAt(row, 0));
-		
-		/*Customer customer = new Customer((int) table.getValueAt(row, 0), 
-				(String) table.getValueAt(row, 1));*/
+		Rental rental = new Rental((int) table.getModel().getValueAt(row, 0),
+				(Employee) table.getModel().getValueAt(row, 2) , (Customer) table.getModel().getValueAt(row, 1), 
+				(Product) table.getModel().getValueAt(row, 3), table.getModel().getValueAt(row, 4).toString());
 		
 		this.setEnabled(false);
 		
@@ -68,6 +70,7 @@ public class RentWindow extends JFrame {
 	}
 	
 	private void initializeComponents() {
+		setTitle("Alugu\u00E9is");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
@@ -86,6 +89,7 @@ public class RentWindow extends JFrame {
 		});
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(new RentalDAO().getTableModel());
+		table.removeColumn(table.getColumnModel().getColumn(0));
 		table.getColumnModel().getColumn(0).setMinWidth(35);
 		JScrollPane pane = new JScrollPane(table);
 		contentPane.add(pane, "cell 0 0,grow");

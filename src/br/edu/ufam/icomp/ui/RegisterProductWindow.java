@@ -17,6 +17,7 @@ import br.edu.ufam.icomp.model.Product;
 import br.edu.ufam.icomp.utils.Utils;
 
 import java.awt.GridLayout;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -90,7 +91,7 @@ public class RegisterProductWindow extends JFrame {
 		this.product.setType(cmbType.getSelectedItem().toString());
 		this.product.setTotalInStock((int) spinTotalInStock.getValue());
 		this.product.setMaxPeriodRent((int) spinMaxRentPeriod.getValue());
-		this.product.setPrice(Float.parseFloat(txtRentValue.getText().substring(1)));
+		this.product.setPrice(Float.parseFloat(txtRentValue.getText()));
 		
 		if(this.product.getId() == -1)
 			dao.createProduct(product);
@@ -115,6 +116,7 @@ public class RegisterProductWindow extends JFrame {
 		JLabel lblTtulo = new JLabel("T\u00EDtulo");
 		getContentPane().add(lblTtulo, "flowx,cell 1 0");
 		
+		
 		txtTitle = new JTextField();
 		getContentPane().add(txtTitle, "cell 1 1,growx");
 		txtTitle.setColumns(10);
@@ -126,7 +128,7 @@ public class RegisterProductWindow extends JFrame {
 		getContentPane().add(lblPreo, "cell 3 2");
 		
 		
-		NumberFormat format = NumberFormat.getCurrencyInstance();
+		NumberFormat format = new DecimalFormat(); 
 		format.setMaximumFractionDigits(2);
 		format.setMinimumFractionDigits(2);
 		
@@ -161,6 +163,7 @@ public class RegisterProductWindow extends JFrame {
 		
 		
 		txtDescription = new JTextArea();
+		
 		JScrollPane scrollPane = new JScrollPane(txtDescription);
 		getContentPane().add(scrollPane, "cell 1 7 3 1,grow");
 		

@@ -33,4 +33,17 @@ public class Employee {
 	public String getName() {
 		return this.name;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj == null) {
+	        return false;
+	    }
+	    if (!Employee.class.isAssignableFrom(obj.getClass())) {
+	        return false;
+	    }
+	    final Employee other = (Employee) obj;
+	    
+	    return this.id == other.id;
+	}
 }

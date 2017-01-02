@@ -6,11 +6,45 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import br.edu.ufam.icomp.model.Customer;
+import br.edu.ufam.icomp.model.Employee;
 public class CustomerDAO extends RentalDatabase {
-	private static String TABLE_NAME = "Customer";
+	private static String TABLE_NAME = "Customer";	
+	private static String[] columns = {"id", "name"};
 	
 	public static String getTableName() {
 		return TABLE_NAME;
+	}
+	
+	private static Customer getCustomerFromResultSet(ResultSet rs) {
+		try {
+			return new Customer(
+					rs.getInt(1),
+					rs.getString(2));
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return null;
+	}
+	
+	public static Customer getCustomerById(int id) {
+		String query = "SELECT * FROM " + TABLE_NAME + " WHERE ID = ?";
+		
+		try {
+			PreparedStatement st = connection.prepareStatement(query);
+			st.setInt(1, id);
+			
+			ResultSet rs = st.executeQuery();
+			rs.next();
+			
+			return getCustomerFromResultSet(rs);			
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return null;
 	}
 	
 	public ArrayList<Customer> getAll(boolean filter) {
@@ -22,8 +56,8 @@ public class CustomerDAO extends RentalDatabase {
 			
 			while(rs.next()) {
 				result.add(new Customer(
-						rs.getInt(1),
-						rs.getString(2)));
+						rs.getInt(columns[0]),
+						rs.getString(columns[1])));
 			}
 		}
 		catch(SQLException e) {

@@ -51,13 +51,13 @@ public class ProductWindow extends JFrame {
 	
 	private void tableCellClicked() {
 		int row = table.getSelectedRow();
-		Product product = new Product((int) table.getValueAt(row, 0), 
-				(String) table.getValueAt(row, 1),
-				(String) table.getValueAt(row, 2),
-				(String) table.getValueAt(row, 3),
-				(int) table.getValueAt(row, 4),
-				(int) table.getValueAt(row, 5),
-				Float.parseFloat(table.getValueAt(row, 6).toString()));
+		Product product = new Product((int) table.getModel().getValueAt(row, 0), 
+				(String) table.getModel().getValueAt(row, 1),
+				(String) table.getModel().getValueAt(row, 2),
+				(String) table.getModel().getValueAt(row, 3),
+				(int) table.getModel().getValueAt(row, 4),
+				(int) table.getModel().getValueAt(row, 5),
+				Float.parseFloat(table.getModel().getValueAt(row, 6).toString()));
 		
 		this.setEnabled(false);
 		
@@ -71,6 +71,7 @@ public class ProductWindow extends JFrame {
 	}
 	
 	private void initializeComponents() {
+		setTitle("Produtos");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
@@ -90,6 +91,7 @@ public class ProductWindow extends JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(new ProductDAO().getTableModel());
 		table.getColumnModel().getColumn(0).setMinWidth(35);
+		table.removeColumn(table.getColumnModel().getColumn(0));
 		JScrollPane pane = new JScrollPane(table);
 		contentPane.add(pane, "cell 0 0,grow");
 		

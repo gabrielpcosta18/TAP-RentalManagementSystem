@@ -87,4 +87,17 @@ public class Product {
 	public String toString() {
 		return this.title + "/" + this.type;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj == null) {
+	        return false;
+	    }
+	    if (!Product.class.isAssignableFrom(obj.getClass())) {
+	        return false;
+	    }
+	    final Product other = (Product) obj;
+	    
+	    return this.id == other.id;
+	}
 }
