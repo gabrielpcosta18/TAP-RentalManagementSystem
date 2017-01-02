@@ -83,4 +83,8 @@ public class Product {
 	public void setMaxPeriodRent(int maxPeriodRent) {
 		this.maxPeriodRent = maxPeriodRent;
 	}	
+	
+	public String toString() {
+		return this.title + "/" + this.type;
+	}
 }

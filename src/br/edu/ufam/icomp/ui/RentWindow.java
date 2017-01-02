@@ -2,68 +2,71 @@ package br.edu.ufam.icomp.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 import br.edu.ufam.icomp.bd.CustomerDAO;
-import br.edu.ufam.icomp.bd.EmployeeDAO;
+import br.edu.ufam.icomp.bd.RentalDAO;
 import br.edu.ufam.icomp.model.Customer;
-import br.edu.ufam.icomp.model.Employee;
+import br.edu.ufam.icomp.model.Rental;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class EmployeeWindow extends JFrame {
+public class RentWindow extends JFrame {
+
 	private JPanel contentPane;
 	private JTable table;
 	private MainWindow parentWindow;
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public EmployeeWindow() {
+	public RentWindow() {
 		initializeComponents();
 	}
 	
-	public EmployeeWindow(MainWindow parentWindow) {
+	public RentWindow(MainWindow parentWindow) {
 		this();
 		this.parentWindow = parentWindow;
 	}
 	
-	private void btnNewCustomerClicked() {
+	private void btnNewRentClicked() {
 		this.setEnabled(false);
 		
-		RegisterEmployeeWindow window = new RegisterEmployeeWindow(EmployeeWindow.this);
-		window.setLocationRelativeTo(EmployeeWindow.this.getOwner());
+		RegisterRentWindow window = new RegisterRentWindow(RentWindow.this);
+		window.setLocationRelativeTo(RentWindow.this.getOwner());
 		window.setVisible(true);
 	}
 	
 	private void tableCellClicked() {
 		int row = table.getSelectedRow();
-		Employee employee = new Employee((int) table.getValueAt(row, 0), 
-				(String) table.getValueAt(row, 1));
+		Rental rental = new Rental((int) table.getValueAt(row, 0));
+		
+		/*Customer customer = new Customer((int) table.getValueAt(row, 0), 
+				(String) table.getValueAt(row, 1));*/
 		
 		this.setEnabled(false);
 		
-		RegisterEmployeeWindow window = new RegisterEmployeeWindow(EmployeeWindow.this, employee);
-		window.setLocationRelativeTo(EmployeeWindow.this.getOwner());
+		RegisterRentWindow window = new RegisterRentWindow(RentWindow.this, rental);
+		window.setLocationRelativeTo(RentWindow.this.getOwner());
 		window.setVisible(true);
 	}
 	
 	public void refreshTableData() {
-		table.setModel(new EmployeeDAO().getTableModel());
+		table.setModel(new RentalDAO().getTableModel());
 	}
-
+	
 	private void initializeComponents() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -82,18 +85,18 @@ public class EmployeeWindow extends JFrame {
 			}
 		});
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setModel(new EmployeeDAO().getTableModel());
+		table.setModel(new RentalDAO().getTableModel());
 		table.getColumnModel().getColumn(0).setMinWidth(35);
 		JScrollPane pane = new JScrollPane(table);
 		contentPane.add(pane, "cell 0 0,grow");
 		
-		JButton btnNewCustomer = new JButton("Novo Cliente");
-		btnNewCustomer.addActionListener(new ActionListener() {
+		JButton btnNewRent = new JButton("Novo Aluguel");
+		btnNewRent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				btnNewCustomerClicked();
+				btnNewRentClicked();
 			}
 		});
-		contentPane.add(btnNewCustomer, "cell 0 1");
+		contentPane.add(btnNewRent, "cell 0 1");
 		
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -102,7 +105,7 @@ public class EmployeeWindow extends JFrame {
 			}
 		});
 	}
-	
+
 	private void onClosing() {
 		this.parentWindow.frame.setEnabled(true);
 	}

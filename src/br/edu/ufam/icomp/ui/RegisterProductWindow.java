@@ -14,9 +14,11 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import br.edu.ufam.icomp.bd.ProductDAO;
 import br.edu.ufam.icomp.model.Product;
+import br.edu.ufam.icomp.utils.Utils;
 
 import java.awt.GridLayout;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.swing.BoxLayout;
@@ -35,23 +37,33 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.JComboBox;
 
 public class RegisterProductWindow extends JFrame {
 	private JTextField txtTitle;
-	private JTextField txtType;
 	private JTextArea txtDescription;
 	private JSpinner spinMaxRentPeriod;
 	private JSpinner spinTotalInStock;
 	private JFormattedTextField txtRentValue;
+	private JComboBox cmbType;
+	
 	private Product product;
 	private ProductWindow parentWindow;
+	private ArrayList<String> types;
 	
 	/**
 	 * Create the frame.
 	 */
 	public RegisterProductWindow() {
-		initializeComponents();
 		this.product = new Product();
+		
+		this.types = new ArrayList<>();
+		this.types.add("DVD");
+		this.types.add("Torrent");
+		this.types.add("Blu-ray");
+		this.types.add("Fita");
+		
+		initializeComponents();
 	}
 	
 	public RegisterProductWindow(ProductWindow parentWindow) {
@@ -66,7 +78,7 @@ public class RegisterProductWindow extends JFrame {
 		txtDescription.setText(product.getDescription());
 		txtRentValue.setText(Float.toString(product.getPrice()));
 		txtTitle.setText(product.getTitle());
-		txtType.setText(product.getType());
+		cmbType.setSelectedIndex(this.types.indexOf(product.getType()));
 		spinMaxRentPeriod.setValue(product.getMaxPeriodRent());
 		spinTotalInStock.setValue(product.getTotalInStock());
 	}
@@ -75,7 +87,7 @@ public class RegisterProductWindow extends JFrame {
 		ProductDAO dao = new ProductDAO();
 		this.product.setTitle(txtTitle.getText());
 		this.product.setDescription(txtDescription.getText());
-		this.product.setType(txtType.getText());
+		this.product.setType(cmbType.getSelectedItem().toString());
 		this.product.setTotalInStock((int) spinTotalInStock.getValue());
 		this.product.setMaxPeriodRent((int) spinMaxRentPeriod.getValue());
 		this.product.setPrice(Float.parseFloat(txtRentValue.getText().substring(1)));
@@ -112,16 +124,14 @@ public class RegisterProductWindow extends JFrame {
 		
 		JLabel lblPreo = new JLabel("Valor do Aluguel");
 		getContentPane().add(lblPreo, "cell 3 2");
-		lblTipo.setLabelFor(txtType);
-		
-		txtType = new JTextField();
-		getContentPane().add(txtType, "cell 1 3,growx");
-		txtType.setColumns(10);
 		
 		
 		NumberFormat format = NumberFormat.getCurrencyInstance();
 		format.setMaximumFractionDigits(2);
 		format.setMinimumFractionDigits(2);
+		
+		cmbType = new JComboBox();
+		getContentPane().add(cmbType, "cell 1 3,growx");
 
 		
 		
@@ -169,5 +179,6 @@ public class RegisterProductWindow extends JFrame {
 			}
 		});
 		
+		Utils.fillComboBox(cmbType, this.types);
 	}
 }

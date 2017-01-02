@@ -92,8 +92,13 @@ public class RentalDatabase {
 		return "";
 	}
 
-	public Vector<String> getColumnsName() {
+	public Vector<String> getColumnsName(ResultSetMetaData meta, int columnCount) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		Vector<String> columnNames = new Vector<>();
+				
+		for(int i = 1; i <= columnCount; i++) 
+			columnNames.add(meta.getColumnName(i));
+		
+		return columnNames;
 	}
 }

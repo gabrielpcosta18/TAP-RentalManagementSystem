@@ -4,9 +4,13 @@ public class Employee {
 	private int id;
 	private String name;
 	
-	public Employee(String name) {
-		this.name = name;
+	public Employee() {
 		this.id = -1;
+	}
+	
+	public Employee(String name) {
+		this();
+		this.name = name;
 	}
 	
 	public Employee(int id, String name) {

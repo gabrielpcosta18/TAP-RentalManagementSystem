@@ -20,17 +20,25 @@ import br.edu.ufam.icomp.bd.ProductDAO;
 import br.edu.ufam.icomp.model.Employee;
 import br.edu.ufam.icomp.model.Product;
 import net.miginfocom.swing.MigLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ProductWindow extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	private MainWindow parentWindow;
 	
 	/**
 	 * Create the frame.
 	 */
 	public ProductWindow() {
 		initializeComponents();
+	}
+	
+	public ProductWindow(MainWindow parentWindow) {
+		this();
+		this.parentWindow = parentWindow;
 	}
 	
 	private void btnNewCustomerClicked() {
@@ -92,6 +100,17 @@ public class ProductWindow extends JFrame {
 			}
 		});
 		contentPane.add(btnNewCustomer, "cell 0 1");
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				onClosing();
+			}
+		});
+	}
+	
+	private void onClosing() {
+		this.parentWindow.frame.setEnabled(true);
 	}
 
 }

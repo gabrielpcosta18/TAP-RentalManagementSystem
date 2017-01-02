@@ -1,6 +1,7 @@
 package br.edu.ufam.icomp.ui;
 
 import java.awt.EventQueue;
+import java.awt.Frame;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -14,12 +15,15 @@ import java.awt.event.MouseEvent;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class MainWindow {
 
-	private JFrame frame;
+	public JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -43,6 +47,14 @@ public class MainWindow {
 	public MainWindow() {
 		initialize();
 		RentalDatabase db = new RentalDatabase();
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -110,6 +122,7 @@ public class MainWindow {
 		frame.getContentPane().setLayout(new MigLayout("", "[grow][][][grow]", "[grow][][grow]"));
 		
 		JButton btnCustomer = new JButton("Clientes");
+		btnCustomer.setFocusable(false);
 		btnCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnCustomerClicked();
@@ -118,6 +131,7 @@ public class MainWindow {
 		frame.getContentPane().add(btnCustomer, "cell 0 0,grow");
 		
 		JButton btnEmployee = new JButton("Funcion\u00E1rios");
+		btnEmployee.setFocusable(false);
 		btnEmployee.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnEmployeeClicked();
@@ -126,9 +140,16 @@ public class MainWindow {
 		frame.getContentPane().add(btnEmployee, "cell 3 0,grow");
 		
 		JButton btnRent = new JButton("Alugu\u00E9is");
+		btnRent.setFocusable(false);
+		btnRent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnRentClicked();
+			}
+		});
 		frame.getContentPane().add(btnRent, "flowx,cell 0 2,grow");
 		
 		JButton btnProduct = new JButton("Produtos");
+		btnProduct.setFocusable(false);
 		btnProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnProductClicked();
@@ -137,21 +158,29 @@ public class MainWindow {
 		frame.getContentPane().add(btnProduct, "cell 3 2,grow");
 	}
 	
+	private void btnRentClicked() {
+		RentWindow window = new RentWindow(this);
+		openOtheWindow(window);
+	}
+	
 	private void btnProductClicked() {
-		ProductWindow window = new ProductWindow();
-		window.setLocationRelativeTo(MainWindow.this.frame);
-		window.setVisible(true);
+		ProductWindow window = new ProductWindow(this);
+		openOtheWindow(window);
 	}
 	
 	private void btnCustomerClicked() {
-		CustomerWindow window = new CustomerWindow();
-		window.setLocationRelativeTo(MainWindow.this.frame);
-		window.setVisible(true);
+		CustomerWindow window = new CustomerWindow(this);
+		openOtheWindow(window);
 	}
 	
 	private void btnEmployeeClicked() {
-		EmployeeWindow window = new EmployeeWindow();
-		window.setLocationRelativeTo(MainWindow.this.frame);
+		EmployeeWindow window = new EmployeeWindow(this);
+		openOtheWindow(window);
+	}
+	
+	private void openOtheWindow(Frame window) {
+		this.frame.setEnabled(false);
+		window.setLocationRelativeTo(this.frame);
 		window.setVisible(true);
 	}
 

@@ -20,17 +20,25 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class CustomerWindow extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	private MainWindow parentWindow;
 
 	/**
 	 * Create the frame.
 	 */
 	public CustomerWindow() {
 		initializeComponents();
+	}
+	
+	public CustomerWindow(MainWindow parentWindow) {
+		this();
+		this.parentWindow = parentWindow;
 	}
 		
 	private void btnNewCustomerClicked() {
@@ -87,6 +95,18 @@ public class CustomerWindow extends JFrame {
 			}
 		});
 		contentPane.add(btnNewCustomer, "cell 0 1");
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				onClosing();
+			}
+		});
+	}
+	
+	private void onClosing() {
+		this.parentWindow.frame.setEnabled(true);
+		this.parentWindow.frame.setVisible(true);
 	}
 
 }
