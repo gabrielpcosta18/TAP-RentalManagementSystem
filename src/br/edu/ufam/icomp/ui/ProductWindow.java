@@ -68,6 +68,7 @@ public class ProductWindow extends JFrame {
 	
 	public void refreshTableData() {
 		table.setModel(new ProductDAO().getTableModel());
+		table.removeColumn(table.getColumnModel().getColumn(0));
 	}
 	
 	private void initializeComponents() {

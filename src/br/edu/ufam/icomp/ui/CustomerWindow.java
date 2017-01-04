@@ -63,6 +63,7 @@ public class CustomerWindow extends JFrame {
 	
 	public void refreshTableData() {
 		table.setModel(new CustomerDAO().getTableModel());
+		table.removeColumn(table.getColumnModel().getColumn(0));
 	}
 	
 	private void initializeComponents() {

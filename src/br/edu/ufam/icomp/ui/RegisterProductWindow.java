@@ -25,6 +25,7 @@ import java.util.Locale;
 import javax.swing.BoxLayout;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JFormattedTextField.AbstractFormatter;
@@ -60,7 +61,7 @@ public class RegisterProductWindow extends JFrame {
 		
 		this.types = new ArrayList<>();
 		this.types.add("DVD");
-		this.types.add("Torrent");
+		this.types.add("CD");
 		this.types.add("Blu-ray");
 		this.types.add("Fita");
 		
@@ -84,22 +85,29 @@ public class RegisterProductWindow extends JFrame {
 		spinTotalInStock.setValue(product.getTotalInStock());
 	}
 	
+	private boolean formValidate() {
+		return (!this.txtTitle.getText().isEmpty());
+	}
+	
 	private void btnOkClicked() {
-		ProductDAO dao = new ProductDAO();
-		this.product.setTitle(txtTitle.getText());
-		this.product.setDescription(txtDescription.getText());
-		this.product.setType(cmbType.getSelectedItem().toString());
-		this.product.setTotalInStock((int) spinTotalInStock.getValue());
-		this.product.setMaxPeriodRent((int) spinMaxRentPeriod.getValue());
-		this.product.setPrice(Float.parseFloat(txtRentValue.getText()));
-		
-		if(this.product.getId() == -1)
-			dao.createProduct(product);
-		else dao.updateProduct(product);
-		
-		this.parentWindow.setEnabled(true);
-		this.parentWindow.refreshTableData();
-		RegisterProductWindow.this.dispose();
+		if(formValidate()) {
+			ProductDAO dao = new ProductDAO();
+			this.product.setTitle(txtTitle.getText());
+			this.product.setDescription(txtDescription.getText());
+			this.product.setType(cmbType.getSelectedItem().toString());
+			this.product.setTotalInStock((int) spinTotalInStock.getValue());
+			this.product.setMaxPeriodRent((int) spinMaxRentPeriod.getValue());
+			this.product.setPrice(Float.parseFloat(txtRentValue.getText()));
+			
+			if(this.product.getId() == -1)
+				dao.createProduct(product);
+			else dao.updateProduct(product);
+			
+			this.parentWindow.setEnabled(true);
+			this.parentWindow.refreshTableData();
+			RegisterProductWindow.this.dispose();
+		}
+		else JOptionPane.showMessageDialog(this, "Preencha todos os campos");
 	}
 	
 	private void onClosing() {
@@ -159,8 +167,6 @@ public class RegisterProductWindow extends JFrame {
 		
 		JLabel lblDescrio = new JLabel("Descri\u00E7\u00E3o");
 		getContentPane().add(lblDescrio, "cell 1 6");
-		
-		
 		
 		txtDescription = new JTextArea();
 		

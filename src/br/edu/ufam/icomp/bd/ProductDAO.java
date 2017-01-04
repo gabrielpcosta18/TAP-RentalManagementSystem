@@ -55,8 +55,11 @@ public class ProductDAO extends RentalDatabase {
 	}
 	
 	public ArrayList<Product> getAll(boolean filter) {
-		String query = "SELECT * FROM " + TABLE_NAME;
+		String query = "SELECT * FROM " + TABLE_NAME + " as p";
 		ArrayList<Product> result = new ArrayList<>();
+		
+		if(filter) 
+			query += " WHERE p.totalInStock > (SELECT COUNT(ID) FROM Rental WHERE productId = p.id and wasDeveloped = false)";
 		
 		try {
 			ResultSet rs = connection.prepareStatement(query).executeQuery();

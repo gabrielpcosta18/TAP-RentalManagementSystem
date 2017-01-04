@@ -11,6 +11,7 @@ import br.edu.ufam.icomp.bd.CustomerDAO;
 import br.edu.ufam.icomp.model.Customer;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
@@ -51,17 +52,24 @@ public class RegisterCustomerWindow extends JFrame {
 		this.parentWindow.setEnabled(true);
 	}
 	
+	private boolean formValidate() {
+		return (!this.txtNome.getText().isEmpty());
+	}
+	
 	private void btnOkClicked() {
-		CustomerDAO dao = new CustomerDAO();
-		this.customer.setName(txtNome.getText());
-		
-		if(this.customer.getId() == -1) 
-			dao.registerCustomer(customer);
-		else dao.updateCustomer(customer);
-		
-		this.parentWindow.setEnabled(true);
-		this.parentWindow.refreshTableData();
-		RegisterCustomerWindow.this.dispose();
+		if(formValidate()) {
+			CustomerDAO dao = new CustomerDAO();
+			this.customer.setName(txtNome.getText());
+			
+			if(this.customer.getId() == -1) 
+				dao.registerCustomer(customer);
+			else dao.updateCustomer(customer);
+			
+			this.parentWindow.setEnabled(true);
+			this.parentWindow.refreshTableData();
+			RegisterCustomerWindow.this.dispose();
+		}
+		else JOptionPane.showMessageDialog(this, "Preencha todos os campos");
 	}
 	
 	private void initializeComponents() {

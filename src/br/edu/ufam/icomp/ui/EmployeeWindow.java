@@ -62,6 +62,7 @@ public class EmployeeWindow extends JFrame {
 	
 	public void refreshTableData() {
 		table.setModel(new EmployeeDAO().getTableModel());
+		table.removeColumn(table.getColumnModel().getColumn(0));
 	}
 
 	private void initializeComponents() {

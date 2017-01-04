@@ -73,7 +73,7 @@ public class RentalDAO extends RentalDatabase {
 	@Override
 	public String getTableQuery() {
 		// TODO Auto-generated method stub
-		String str = "select r.id as Código, r.customerId as NomeCliente, r.employeeRentId as NomeFuncionario, " +
+		String str = "select r.id as Código, r.customerId as Cliente, r.employeeRentId as Funcionario, " +
 				"r.productId as Titulo, to_char(r.rentDate, \'DD/MM/YYYY\') as DataEmprestimo, r.wasDeveloped as Devolvido from " + 
 				TABLE_NAME + " as r";
 		/*return "select r.id as Código, c.name as NomeCliente, e.name as NomeFuncionario, " +

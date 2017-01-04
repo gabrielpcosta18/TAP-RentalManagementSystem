@@ -11,6 +11,7 @@ import br.edu.ufam.icomp.bd.EmployeeDAO;
 import br.edu.ufam.icomp.model.Employee;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -30,6 +31,7 @@ public class RegisterEmployeeWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterEmployeeWindow() {
+		setTitle("Cadastro Funcion\u00E1rio");
 		initializeComponents();
 		this.employee = new Employee("");
 	}
@@ -45,16 +47,23 @@ public class RegisterEmployeeWindow extends JFrame {
 		txtName.setText(this.employee.getName());
 	}
 	
+	private boolean formValidate() {
+		return (!this.txtName.getText().isEmpty());
+	}
+	
 	private void btnConfirmarClicked() {
-		this.employee.setName(txtName.getText());
-		EmployeeDAO dao = new EmployeeDAO();
-		
-		if(this.employee.getId() == -1) dao.registerEmployee(employee);
-		else dao.updateEmployee(employee);
-		
-		this.parentWindow.setEnabled(true);
-		this.parentWindow.refreshTableData();
-		RegisterEmployeeWindow.this.dispose();
+		if(formValidate()) {
+			EmployeeDAO dao = new EmployeeDAO();
+			this.employee.setName(txtName.getText());
+			
+			if(this.employee.getId() == -1) dao.registerEmployee(employee);
+			else dao.updateEmployee(employee);
+			
+			this.parentWindow.setEnabled(true);
+			this.parentWindow.refreshTableData();
+			RegisterEmployeeWindow.this.dispose();
+		}
+		else JOptionPane.showMessageDialog(this, "Preencha todos os campos");
 	}
 	
 	private void onClosing() {

@@ -43,7 +43,7 @@ public class RentWindow extends JFrame {
 		this();
 		this.parentWindow = parentWindow;
 	}
-	
+		
 	private void btnNewRentClicked() {
 		this.setEnabled(false);
 		
@@ -67,6 +67,7 @@ public class RentWindow extends JFrame {
 	
 	public void refreshTableData() {
 		table.setModel(new RentalDAO().getTableModel());
+		table.removeColumn(table.getColumnModel().getColumn(0));
 	}
 	
 	private void initializeComponents() {
