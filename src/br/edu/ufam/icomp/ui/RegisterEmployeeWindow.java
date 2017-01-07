@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import net.miginfocom.swing.MigLayout;
 
 public class RegisterEmployeeWindow extends JFrame {
 
@@ -75,18 +76,15 @@ public class RegisterEmployeeWindow extends JFrame {
 		setBounds(100, 100, 300, 155);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
+		contentPane.setLayout(new MigLayout("", "[][][grow][][][]", "[14px][69px][23px]"));
 		
 		JLabel lblNome = new JLabel("Nome");
-		panel.add(lblNome);
+		contentPane.add(lblNome, "cell 1 0,growx,aligny top");
 		
 		txtName = new JTextField();
+		contentPane.add(txtName, "cell 2 0 3 1,grow");
 		txtName.setHorizontalAlignment(SwingConstants.TRAILING);
-		panel.add(txtName);
 		txtName.setColumns(10);
 		
 		JButton btnConfirmar = new JButton("Confirmar");
@@ -96,7 +94,7 @@ public class RegisterEmployeeWindow extends JFrame {
 			}
 		});
 		
-		contentPane.add(btnConfirmar, BorderLayout.SOUTH);
+		contentPane.add(btnConfirmar, "cell 2 2 2 1,growx,aligny top");
 		
 		addWindowListener(new WindowAdapter() {
 			@Override

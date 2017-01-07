@@ -10,8 +10,8 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 public class RentalDatabase {
-	private static String url = "jdbc:postgresql://localhost:5432/RentalDB";
-	private static String user = "postgres";
+	private static String url = "jdbc:mysql://localhost:3306/RentalDB";
+	private static String user = "root";
 	private static String password = "123456";
 	protected static Connection connection = null;
 	

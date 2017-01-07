@@ -90,7 +90,7 @@ public class EmployeeWindow extends JFrame {
 		JScrollPane pane = new JScrollPane(table);
 		contentPane.add(pane, "cell 0 0,grow");
 		
-		JButton btnNewCustomer = new JButton("Novo Cliente");
+		JButton btnNewCustomer = new JButton("Novo Funcionário");
 		btnNewCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnNewCustomerClicked();
